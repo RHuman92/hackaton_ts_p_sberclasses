@@ -29,7 +29,7 @@ class Messager:
 
 class Module:
     def __init__(self, master, func=None):
-        self.text = Text(master,bg="white",
+        self.text = Text(master, bg="white",
                          fg='black', wrap=WORD)
         self.button = list()
         self.button.append(Button(root, width=20, height=1, text="Сохранить изменения"))
@@ -57,26 +57,36 @@ class Module:
 
 class Helper:
     def __init__(self):
+        self.base = list()
+        self.config = open("resource/config.cfg")
+        for line in self.config:
+            self.base.append(line)
         self.img = Image.open("resource/sber.jpg")
         self.image = ImageTk.PhotoImage(self.img)
         self.label1 = Label(image=self.image)
-        self.label2 = Text()
-        self.text = Text()
-        self.button = Button()
+        self.label2 = Text(wrap=WORD)
+        self.text = Entry()
+        self.button = Button(text="Отправить", command=self.send)
         self.place()
         self.i = 0
-        self.add("СберПомощь: Вы бездействуете! Нужна помощь? Пиши мне!")
+        self.add(self.base[0])
         self.label1.bind('<Button-1>', self.b1)
 
     def add(self, s):
-        self.label2.insert(1.0, s)
-        #self.i = self.i + 1
+        self.label2.insert(END, s)
 
     def place(self):
         w, h = self.img.size
         self.label1.place(width=w, height=h, x=10, y=100)
         self.label2.place(width=w+30, x=10, y=100+h)
-        self.text.place(width=w + 30, height=60, x=10, y=100 + h+130)
+        self.text.place(width=w + 30, height=60, x=10, y=350 + h+130)
+        self.button.place(width=w + 30, height=60, x=10, y=350 + h+190)
+
+    def send(self):
+        self.i = self.i + 1
+        self.add("Вы: "+self.text.get()+'\n')
+        self.add(self.base[self.i])
+
 
     def unplace(self):
         self.label1.place_forget()
