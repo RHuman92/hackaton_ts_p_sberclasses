@@ -60,17 +60,17 @@ class Helper:
         self.img = Image.open("resource/sber.jpg")
         self.image = ImageTk.PhotoImage(self.img)
         self.label1 = Label(image=self.image)
-        self.label2 = Entry()
+        self.label2 = Text()
         self.text = Text()
         self.button = Button()
         self.place()
         self.i = 0
-        self.add("Нужна помощь? Пиши мне!")
+        self.add("СберПомощь: Вы бездействуете! Нужна помощь? Пиши мне!")
         self.label1.bind('<Button-1>', self.b1)
 
     def add(self, s):
-        self.label2.insert(self.i, s)
-        self.i = self.i + 1
+        self.label2.insert(1.0, s)
+        #self.i = self.i + 1
 
     def place(self):
         w, h = self.img.size
@@ -159,5 +159,6 @@ root.geometry("1920x1080")
 root.title("Игра в имитацию. Конструктор курсов")
 state_frame = StateFrame()
 helper = Helper()
+module = Module(root)
 
 root.mainloop()
